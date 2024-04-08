@@ -16,7 +16,7 @@ setup(
     packages=setuptools.find_packages(),
     license="MIT",
     long_description=long_description,
-    exclude = ["main"],
+    exclude = ["assets"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
