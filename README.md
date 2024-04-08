@@ -86,8 +86,8 @@ python main_quant.py \
 
 Below are the visualization results of W4A8(left) and W4A4(right) quantized models' attention heatmaps:
 <div style="display: flex; align-items: center; justify-content: space-around;">
-    <img src="assets/all_layers_avg_llama_w_4_a_8.jpg" width=500>
-    <img src="assets/all_layers_avg_llama_w_4_a_4.jpg" width=500>
+    <img src="assets/all_layers_avg_llama_w_4_a_8.jpg" width=400>
+    <img src="assets/all_layers_avg_llama_w_4_a_4.jpg" width=400>
 </div>
 It's obvious that the distributions of attention weights in the W4A4 model are quite different from the W4A8 model, where the first special token `.` is no longer attended by other tokens, while the tokens after the first `.` begin to strongly attend the starting token. 
 
