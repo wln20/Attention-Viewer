@@ -68,6 +68,31 @@ The results of the heads in layer i could be found at `./vis/llama2-7b-chat/laye
 
 More details and features could be found in the appendix. 
 
+## Advanced Usage: Visualizing Quantized Model's attention
+> NOTE: qllm-eval's dependencies should be additionally installed according to their repository to run `main_quant.py`
+
+Along with [thu-nics/qllm-eval](https://github.com/thu-nics/qllm-eval), here we provide `main_quant.py` to visualize the attention weights of quantized models. 
+
+For example, visualize a model's attention under W4A4 quantization:
+```sh
+python main_quant.py \
+--model_path meta-llama/Llama-2-7b-chat-hf \
+--model_id llama2-7b-chat_w_4_a_4 \
+--prompt 'Summer is warm. Winter is cold.\n' \
+--save_fig_path ./vis
+--w_bit 4
+--a_bit 4
+```
+
+Below are the visualization results of W4A8(left) and W4A4(right) quantized models' attention heatmaps:
+<div style="display: flex; align-items: center; justify-content: space-around;">
+    <img src="assets/all_layers_avg_llama_w_4_a_8.jpg" width=500>
+    <img src="assets/all_layers_avg_llama_w_4_a_4.jpg" width=500>
+</div>
+It's obvious that the distributions of attention weights in the W4A4 model are quite different from the W4A8 model, where the first special token `.` is no longer attended by other tokens, while the tokens after the first `.` begin to strongly attend the starting token. 
+
+
+
 ## Appendix
 Below is a full list of `attn_viewer.core.view_attention`'s arguments:
 + `model`: The transformers model object.
