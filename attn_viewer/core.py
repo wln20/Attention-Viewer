@@ -12,6 +12,7 @@ def view_attention(
     save_attention_scores_path=None,
     load_attention_scores_path=None,
     save_fig_path=None,
+    plot_figs_per_head=False,
     num_figs_per_row=4
 ):
     if load_attention_scores_path:  # plot using the existing attention scores
@@ -45,4 +46,4 @@ def view_attention(
                 torch.save(saved_data, f)
 
     print('Plotting heatmap for attention scores ...')
-    plot_heatmap(attention_scores, model_id, save_fig_path, tokens_list)
+    plot_heatmap(attention_scores, model_id, plot_figs_per_head, save_fig_path, tokens_list)

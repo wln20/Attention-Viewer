@@ -6,7 +6,7 @@ import torch
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def plot_heatmap(attention_scores, model_id, save_fig_path, tokens_list=None, num_figs_per_row=4):
+def plot_heatmap(attention_scores, model_id, plot_figs_per_head, save_fig_path, tokens_list=None, num_figs_per_row=4):
     """
     attention_scores: a list containing 32 layers' attention scores, each is a tensor with shape [1, num_heads, seq_len, seq_len]
     tokens_list: act as xticks and yticks of the figure, eg. ['<s>', 'Hi', ',', 'how', 'are', 'you', '?']
@@ -28,7 +28,10 @@ def plot_heatmap(attention_scores, model_id, save_fig_path, tokens_list=None, nu
 
     plt.suptitle(f'all layers avg') 
     plt.savefig(os.path.join(save_fig_path_model, f'all_layers_avg.jpg'))
-    plt.close()     
+    plt.close()   
+
+    if not plot_figs_per_head:
+        return
 
     # a figure for each layer
     for layer_idx in range(len(attention_scores)):

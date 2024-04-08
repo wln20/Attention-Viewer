@@ -20,6 +20,7 @@ parser.add_argument('--save_attention_scores', action='store_true', help='whethe
 parser.add_argument('--save_attention_scores_path', default='./attn_scores')
 parser.add_argument('--load_attention_scores_path', default=None, help='if specified, would just load the stored attention scores and plot')
 # visualization
+parser.add_argument('--plot_figs_per_head', action='store_true', help='whether to plot heatmap for each head')
 parser.add_argument('--save_fig_path', default='./vis')
 parser.add_argument('--num_figs_per_row', type=int, default=4)
 args = parser.parse_args()
@@ -43,6 +44,7 @@ if __name__ == "__main__":
             save_attention_scores=args.save_attention_scores,
             save_attention_scores_path=args.save_attention_scores_path,
             load_attention_scores_path=args.load_attention_scores_path,
+            plot_figs_per_head=args.plot_figs_per_head,
             save_fig_path=args.save_fig_path,
             num_figs_per_row=args.num_figs_per_row
         )
