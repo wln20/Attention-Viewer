@@ -18,7 +18,7 @@ def plot_heatmap(attention_scores, model_id, plot_figs_per_head, save_fig_path, 
     print(f'plotting a figure for all layers ...')
     num_heads = len(attention_scores)
     num_rows = math.ceil(num_heads / num_figs_per_row) 
-    fig, axes = plt.subplots(num_rows, num_figs_per_row, figsize=(20, 5 * num_rows))
+    fig, axes = plt.subplots(num_rows, num_figs_per_row, figsize=(len(tokens_list) * 2, 0.5 * num_rows * len(tokens_list)))
     for layer_idx in tqdm(range(len(attention_scores))):
         row, col = layer_idx // num_figs_per_row, layer_idx % num_figs_per_row
         avg_attention_scores = attention_scores[layer_idx][0].mean(dim=0)    # [ seq_len, seq_len]
@@ -38,7 +38,7 @@ def plot_heatmap(attention_scores, model_id, plot_figs_per_head, save_fig_path, 
         print(f'plotting layer {layer_idx} ...')
         num_heads = attention_scores[layer_idx].shape[1]
         num_rows = math.ceil(num_heads / num_figs_per_row)
-        fig, axes = plt.subplots(num_rows, num_figs_per_row, figsize=(20, 5 * num_rows))
+        fig, axes = plt.subplots(num_rows, num_figs_per_row, figsize=(len(tokens_list) * 2, 0.5 * num_rows * len(tokens_list)))
         for head_idx in tqdm(range(num_heads)):
             row, col = head_idx // num_figs_per_row, head_idx % num_figs_per_row
             head_attention_scores = attention_scores[layer_idx][0][head_idx]    # [seq_len, seq_len]
