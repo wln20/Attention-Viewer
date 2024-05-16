@@ -79,8 +79,8 @@ python main_quant.py \
 --model_path meta-llama/Llama-2-7b-chat-hf \
 --model_id llama2-7b-chat_w_4_a_4 \
 --prompt 'Summer is warm. Winter is cold.\n' \
---save_fig_path ./vis
---w_bit 4
+--save_fig_path ./vis \
+--w_bit 4 \
 --a_bit 4
 ```
 
