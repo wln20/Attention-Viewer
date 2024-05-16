@@ -54,7 +54,7 @@ python main.py \
 By default, a figure showing each layer's average attention weights along all heads would be saved to `./vis/llama2-7b-chat/all_layers_avg.jpg`:
 ![assets/all_layers_avg_llama.jpg](assets/all_layers_avg_llama.jpg)
 
-The `--plot_figs_per_head` argument could be further added to generate the heatmap for each head's attention weights in each layer:
+The `--plot_figs_per_head` argument could be added to generate the heatmap for each head's attention weights in each layer:
 ```sh
 python main.py \
 --model_path meta-llama/Llama-2-7b-chat-hf \
@@ -65,6 +65,18 @@ python main.py \
 ```
 The results of the heads in layer i could be found at `./vis/llama2-7b-chat/layer_{i}.jpg`. For example, the figure for layer 0 is:
 ![assets/layer_0_llama.jpg](assets/layer_0_llama.jpg)
+
+Moreover, the first token usually attracts so much attention that other tokens' attention scores are hard to distinguish, so the `--ignore_first_token` argument could be added to skip the first token and only plot attention heatmap of other tokens:
+```sh
+python main.py \
+--model_path meta-llama/Llama-2-7b-chat-hf \
+--model_id llama2-7b-chat \
+--prompt 'Summer is warm. Winter is cold.\n' \
+--save_fig_path ./vis \
+--ignore_first_token
+```
+
+![assets/layer_0_llama.jpg](assets/all_layers_avg_llama_ignore_first_token.jpg)
 
 More details and features could be found in the appendix. 
 
@@ -100,6 +112,7 @@ Below is a full list of `attn_viewer.core.view_attention`'s arguments:
 + `model_id`: The name you give to the model, which is used to name the result files.
 + `tokenizer`: The tokenizer object.
 + `prompt`: The prompt to be visualized.
++ `ignore_first_token`: A bool value indicating whether to ignore the first token when plotting.
 + `save_attention_scores`: A bool value indicating whether to save the collected attention weights locally (default: 'False'). If set to `True`, a dictionary with the following content would be saved to `{save_attention_scores_path}/{model_id}_attn_scores.pt`:
   ```python
   saved_data = {
