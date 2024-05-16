@@ -15,6 +15,7 @@ parser.add_argument('--model_path', required=True, help='the path of the model')
 parser.add_argument('--model_id', required=True, help='the name you give to the model')
 # input config
 parser.add_argument('--prompt', default='Summer is warm. Winter is cold.\n')
+parser.add_argument('--ignore_first_token', action='store_true', help='whether to ignore the start token when plotting')
 # saving and loading of attention scores
 parser.add_argument('--save_attention_scores', action='store_true', help='whether to store the attention scores')
 parser.add_argument('--save_attention_scores_path', default='./attn_scores')
@@ -46,6 +47,7 @@ if __name__ == "__main__":
             load_attention_scores_path=args.load_attention_scores_path,
             plot_figs_per_head=args.plot_figs_per_head,
             save_fig_path=args.save_fig_path,
+            ignore_first_token=args.ignore_first_token,
             num_figs_per_row=args.num_figs_per_row
         )
 

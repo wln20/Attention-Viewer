@@ -6,7 +6,7 @@ import torch
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def plot_heatmap(attention_scores, model_id, plot_figs_per_head, save_fig_path, tokens_list=None, num_figs_per_row=4):
+def plot_heatmap(attention_scores, model_id, plot_figs_per_head, save_fig_path, tokens_list=None, ignore_first_token=False, num_figs_per_row=4):
     """
     attention_scores: a list containing 32 layers' attention scores, each is a tensor with shape [1, num_heads, seq_len, seq_len]
     tokens_list: act as xticks and yticks of the figure, eg. ['<s>', 'Hi', ',', 'how', 'are', 'you', '?']
@@ -14,11 +14,15 @@ def plot_heatmap(attention_scores, model_id, plot_figs_per_head, save_fig_path, 
     save_fig_path_model = os.path.join(save_fig_path, model_id) # the model's results are saved under this dir 
     os.makedirs(save_fig_path_model, exist_ok=True)
 
+    if ignore_first_token:
+        attention_scores = [attention_scores[i][:, :, 1: , 1: ] for i in range(len(attention_scores))]
+        tokens_list = tokens_list[1: ]
+
     # a figure for all
     print(f'plotting a figure for all layers ...')
     num_heads = len(attention_scores)
     num_rows = math.ceil(num_heads / num_figs_per_row) 
-    fig, axes = plt.subplots(num_rows, num_figs_per_row, figsize=(20, 5 * num_rows))
+    fig, axes = plt.subplots(num_rows, num_figs_per_row, figsize=(len(tokens_list) * 2, 0.5 * num_rows * len(tokens_list)))
     for layer_idx in tqdm(range(len(attention_scores))):
         row, col = layer_idx // num_figs_per_row, layer_idx % num_figs_per_row
         avg_attention_scores = attention_scores[layer_idx][0].mean(dim=0)    # [ seq_len, seq_len]
@@ -38,7 +42,7 @@ def plot_heatmap(attention_scores, model_id, plot_figs_per_head, save_fig_path, 
         print(f'plotting layer {layer_idx} ...')
         num_heads = attention_scores[layer_idx].shape[1]
         num_rows = math.ceil(num_heads / num_figs_per_row)
-        fig, axes = plt.subplots(num_rows, num_figs_per_row, figsize=(20, 5 * num_rows))
+        fig, axes = plt.subplots(num_rows, num_figs_per_row, figsize=(len(tokens_list) * 2, 0.5 * num_rows * len(tokens_list)))
         for head_idx in tqdm(range(num_heads)):
             row, col = head_idx // num_figs_per_row, head_idx % num_figs_per_row
             head_attention_scores = attention_scores[layer_idx][0][head_idx]    # [seq_len, seq_len]
